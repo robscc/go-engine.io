@@ -9,6 +9,8 @@ import (
 	"sync/atomic"
 	"time"
 
+	"ubntgo/logger"
+
 	"github.com/googollee/go-engine.io/polling"
 	"github.com/googollee/go-engine.io/websocket"
 )
@@ -131,8 +133,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		logger.Debugf("[socketio]new connection sid:%s,current connection count:%d", sid, s.currentConnection)
 		n := atomic.AddInt32(&s.currentConnection, 1)
 		if int(n) > s.config.MaxConnection {
+			logger.Debugf("[socketio]connection count exceed, sid:%s ignored", sid)
 			atomic.AddInt32(&s.currentConnection, -1)
 			http.Error(w, "too many connections", http.StatusServiceUnavailable)
 			return
@@ -155,7 +159,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Name:  s.config.Cookie,
 		Value: sid,
 	})
-
 	conn.(*serverConn).ServeHTTP(w, r)
 }
 
@@ -174,6 +177,7 @@ func (s *Server) transports() transportCreaters {
 
 func (s *Server) onClose(id string) {
 	s.serverSessions.Remove(id)
+	logger.Debugf("[socketio]connection close sid:%s remove,current connection count:%d", id, s.currentConnection)
 	atomic.AddInt32(&s.currentConnection, -1)
 }
 
