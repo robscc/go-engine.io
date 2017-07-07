@@ -148,6 +148,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		conn, err = newServerConn(sid, w, r, s)
 		if err != nil {
 			logger.Debugf("[socketio]new connection sid:%s fail ,error:%s", sid, err)
+			atomic.AddInt32(&s.currentConnection, -1)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
