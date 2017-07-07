@@ -11,8 +11,8 @@ import (
 
 	"ubntgo/logger"
 
-	"github.com/googollee/go-engine.io/polling"
-	"github.com/googollee/go-engine.io/websocket"
+	"github.com/robscc/go-engine.io/polling"
+	"github.com/robscc/go-engine.io/websocket"
 )
 
 type config struct {

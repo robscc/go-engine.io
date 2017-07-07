@@ -3,15 +3,16 @@ package polling
 import (
 	"bytes"
 	"fmt"
-	"github.com/googollee/go-engine.io/message"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
 
-	"github.com/googollee/go-engine.io/parser"
-	"github.com/googollee/go-engine.io/transport"
+	"github.com/robscc/go-engine.io/message"
+
+	"github.com/robscc/go-engine.io/parser"
+	"github.com/robscc/go-engine.io/transport"
 )
 
 type client struct {

@@ -10,11 +10,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/googollee/go-engine.io/transport"
 	"github.com/gorilla/websocket"
+	"github.com/robscc/go-engine.io/transport"
 
-	"github.com/googollee/go-engine.io/message"
-	"github.com/googollee/go-engine.io/parser"
+	"github.com/robscc/go-engine.io/message"
+	"github.com/robscc/go-engine.io/parser"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
