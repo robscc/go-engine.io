@@ -147,6 +147,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		var err error
 		conn, err = newServerConn(sid, w, r, s)
 		if err != nil {
+			logger.Debugf("[socketio]new connection sid:%s fail ,error:%s", sid, err)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
@@ -177,7 +178,7 @@ func (s *Server) transports() transportCreaters {
 
 func (s *Server) onClose(id string) {
 	s.serverSessions.Remove(id)
-	logger.Debugf("[socketio]connection close sid:%s remove,current connection count:%d", id, s.currentConnection)
+	logger.Debugf("[socketio]connection close sid:%s remove,current connection count:%d", id, s.currentConnection-1)
 	atomic.AddInt32(&s.currentConnection, -1)
 }
 

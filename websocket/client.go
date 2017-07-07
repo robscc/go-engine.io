@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+//Implement of transport client
 type client struct {
 	conn *websocket.Conn
 	resp *http.Response
