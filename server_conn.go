@@ -184,11 +184,13 @@ func (c *serverConn) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if c.currentName != transportName {
 		creater := c.callback.transports().Get(transportName)
 		if creater.Name == "" {
+			c.callback.onClose(c.id)
 			http.Error(w, fmt.Sprintf("invalid transport %s", transportName), http.StatusBadRequest)
 			return
 		}
 		u, err := creater.Server(w, r, c)
 		if err != nil {
+			c.callback.onClose(c.id)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
